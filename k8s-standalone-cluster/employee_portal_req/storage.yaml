@@ -1,0 +1,42 @@
+apiVersion: v1
+#kind: apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mypv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+      path:  /data/k8s-lab
+      type: Directory
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - worker-10-0-1-187
+
+---
+apiVersion: v1
+#kind: apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  #persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  volumeName: mypv
+  resources:
+   requests:
+     storage: 1Gi
+ 
+
