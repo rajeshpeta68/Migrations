@@ -28,11 +28,17 @@ spec:
         name: nginx
         ports:
         - containerPort: 80
-        resources:
-          requests:
-            cpu: 50m
-            memory: 32Mi
-          limits:
-            cpu: 250m
-            memory: 128Mi
-status: {}
+        envFrom:
+          - configMapRef:
+              name: my-config
+        volumeMounts:
+          - name:  web-content
+            mountPath:  /usr/share/nginx/html/index.html
+            subPath: index.html
+      volumes:
+         - name: web-content
+           configMap: 
+             name: my-config
+             items:
+               - key: index.html
+                 path: index.html

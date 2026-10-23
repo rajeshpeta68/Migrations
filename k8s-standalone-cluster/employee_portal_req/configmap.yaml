@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+  namespace: e-app
+data:
+  APP_ENV: "development"
+  LOG_LEVEL: "debug"
+  API_URL: "http://api-service:8080"
+  index.html: |
+    <!doctype html>
+    <html>
+      <body>
+        <h1>Kubernetes Employee Portal</h1>
+        <p>Frontend is running successfully!</p>
+      </body>
+    </html>
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  #creationTimestamp: null
+  name: my-secret
+  namespace: e-app
+type: Opaque
+stringData:
+  POSTGRES_USER: labuser
+  POSTGRES_PASSWORD: ChangeMe-For-Lab-123
+  POSTGRES_DB: employeed
+
