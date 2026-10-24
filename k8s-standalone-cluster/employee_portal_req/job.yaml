@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: employee-init
+spec:
+  backoffLimit: 2 
+  template:
+    metadata:
+      labels:
+        app: employee-init
+    spec:
+      containers:
+      - image: busybox:1.36
+        name: employee-init
+        command:
+            - sh
+            - -c
+            - |
+              echo "Initializing Employee Portal..."
+              echo "Checking application configuration..."
+              sleep 10
+              echo "Initialization completed"
+        resources: {}
+      restartPolicy: Never
+status: {}
