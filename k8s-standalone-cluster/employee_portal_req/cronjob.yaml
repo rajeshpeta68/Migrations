@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: employee-backup-demo
+  namespace: e-app
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: backup
+              image: busybox:1.36
+              command:
+                - sh
+                - -c
+                - |
+                  echo "Starting scheduled backup demonstration"
+                  date
+                  echo "Backup task completed"

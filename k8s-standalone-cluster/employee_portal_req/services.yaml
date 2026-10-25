@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  #creationTimestamp: null
+  labels:
+    app: frontend-service
+  name: frontend-service
+  namespace: e-app
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: frontend
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  #creationTimestamp: null
+  labels:
+    app: frontend-nodeport
+  name: frontend-nodeport
+  namespace: e-app
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: frontend
+  type: NodePort
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: e-app
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+
+---
