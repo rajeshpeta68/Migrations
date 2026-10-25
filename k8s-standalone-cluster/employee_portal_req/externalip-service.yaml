@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-external-ip
+  namespace: e-app
+spec:
+  type: ClusterIP
+  externalIPs:
+    - 192.0.2.10
+  selector:
+    app: frontend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 80
