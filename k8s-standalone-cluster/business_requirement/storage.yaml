@@ -7,3 +7,37 @@ volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
 parameters:
   type: gp3
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: employee-data
+  namespace: advanced-lab
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: advanced-gp3
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-check
+  namespace: advanced-lab
+spec:
+  containers:
+    - name: writer
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - "while true; do date >> /data/test.txt; sleep 10; done"
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: employee-data

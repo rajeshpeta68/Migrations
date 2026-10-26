@@ -1,0 +1,48 @@
+#https://medium.com/@muppedaanvesh/a-hands-on-guide-to-kubernetes-qos-classes-%EF%B8%8F-571b5f8f7e58
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-guaranteed
+  namespace: advanced-lab
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 36000"]
+      resources:
+        requests:
+          cpu: "200m"
+          memory: "128Mi"
+        limits:
+          cpu: "200m"
+          memory: "128Mi"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-burstable
+  namespace: advanced-lab
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 36000"]
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "64Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-besteffort
+  namespace: advanced-lab
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 36000"]
