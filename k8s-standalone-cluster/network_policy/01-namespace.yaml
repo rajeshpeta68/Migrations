@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  #creationTimestamp: null
+  name: ecommerce
+spec: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  #creationTimestamp: null
+  name: monitoring
+spec: {}
+status: {}
