@@ -20,12 +20,16 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_instance" "test-instance" {
-    ami = var.aws_region
+    ami = data.aws_ami.amazon_linux.id
     instance_type = var.instance_type
     associate_public_ip_address = true
 
-    tags = {
-      Name = "test-instance-1"
+    tags = merge(
+    local.common_tags,
+    {
+      Name = "test-instance"
     }
+  )
   
 }
+

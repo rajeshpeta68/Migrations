@@ -19,3 +19,13 @@ variable "instance_type" {
     }  
 }
 
+locals {
+  project_name = "terraform-lab"
+  environment = "dev"
+
+  common_tags = {
+    project = local.project_name
+    Environment = local.environment
+    ManagedBy = "Terraform"
+  }
+}
